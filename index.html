@@ -118,5 +118,27 @@
       document.body.appendChild(script);
 
     </script>
+<script>
+    async function LoadJsonFromGitHub(relativePath, unityObjectName, callbackMethod) {
+        try {
+            const response = await fetch(relativePath);
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            const jsonData = await response.json();
+
+            const jsonString = JSON.stringify(jsonData);
+            unityInstance.SendMessage(unityObjectName, callbackMethod, jsonString);
+        } catch (error) {
+            console.error("Failed to load JSON:", error);
+            unityInstance.SendMessage(unityObjectName, callbackMethod, "ERROR");
+        }
+    }
+</script>
+
+
+
+    
   </body>
 </html>
